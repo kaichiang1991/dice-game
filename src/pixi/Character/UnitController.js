@@ -4,7 +4,12 @@ import Unit from "./Unit"
 
 export default class UnitController{
     static init(){
+        this.unitArr = []
         this.onRegisterEvent()
+    }
+
+    static upgradeAll(){
+        this.unitArr?.map(unit => unit.upgrade())
     }
 
     static onRegisterEvent(){
@@ -16,7 +21,8 @@ export default class UnitController{
                 console.log('沒有位子')
                 return
             }
-            new Unit().init(type, gsap.utils.shuffle(notUsedIndex)[0])
+
+            this.unitArr.push(new Unit().init(type, gsap.utils.shuffle(notUsedIndex)[0]))
         })
     }
 }

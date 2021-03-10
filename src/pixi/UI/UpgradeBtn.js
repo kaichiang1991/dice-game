@@ -1,3 +1,4 @@
+import UnitController from "../Character/UnitController";
 import Btn from "./Btn";
 
 export default class UpgradeBtn extends Btn{
@@ -10,7 +11,7 @@ export default class UpgradeBtn extends Btn{
     onRegisterEvent(){
         this.interactive = this.buttonMode = true
         this.on('pointerdown', ()=>{
-            console.log('upgrade')
+            UnitController.upgradeAll()
         })
     }
 }

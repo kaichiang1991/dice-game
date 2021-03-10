@@ -6,6 +6,7 @@ import KillBtn from "./UI/KillBtn"
 import ResourceBtn from "./UI/ResourceBtn"
 import UpgradeBtn from "./UI/UpgradeBtn"
 import GamePad from './UI/GamePad'
+import gsap from "gsap"
 
 export const gamePad = new GamePad()
 
@@ -13,6 +14,8 @@ export default class Main{
     init = () => {
         // 敵人提示
         const enemyBanner = new Banner().init(0xFF0000, 'Enemy')
+        gsap.to(enemyBanner, {duration: 1, yoyo: true, alpha: 0, repeat: -1})
+        
         // 派兵按鈕
         const killBtn = new KillBtn().init([360, 1280])
         // UI 線
