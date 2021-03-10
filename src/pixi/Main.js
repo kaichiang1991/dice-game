@@ -1,0 +1,45 @@
+import { Graphics } from "pixi.js"
+import { app } from "../App"
+import Banner from "./Banner"
+import UnitController from "./Character/UnitController"
+import KillBtn from "./UI/KillBtn"
+import ResourceBtn from "./UI/ResourceBtn"
+import UpgradeBtn from "./UI/UpgradeBtn"
+import GamePad from './UI/GamePad'
+
+export const gamePad = new GamePad()
+
+export default class Main{
+    init = () => {
+        // 敵人提示
+        const enemyBanner = new Banner().init(0xFF0000, 'Enemy')
+        // 派兵按鈕
+        const killBtn = new KillBtn().init([360, 1280])
+        // UI 線
+        const uiLine = new Graphics()
+        .lineStyle(7)
+        .moveTo(0, 1150)
+        .lineTo(720, 1150)
+        // 升級按鈕
+        const upgradeBtn = new UpgradeBtn('升級').init()
+        upgradeBtn.position.set(70, 1200)
+        // 資源
+        const resourceBtn = new ResourceBtn('0').init()
+        resourceBtn.position.set(550, 1200)
+        // 遊戲畫面
+        gamePad.init()
+        
+        const {stage} = app
+        stage.addChild(enemyBanner, killBtn, uiLine, upgradeBtn, resourceBtn, gamePad)
+
+        UnitController.init()
+        // let value = 10
+        // setInterval(() => {
+        //     window.dispatchEvent(new CustomEvent('updateRes', {detail: {
+        //         value
+        //     }}))
+        //     value += 50
+        // }, 2000)
+        
+    }
+}

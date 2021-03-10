@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Stage } from '@inlet/react-pixi'
+import React, { Component } from 'react'
+import './App.css'
+import Main from './pixi/Main'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export let app
+
+export default class App extends Component {
+  mountEvent = (e) => {
+    app = e
+    console.log('mou',  app, new Main().init())
+  }
+
+  render() {
+    return (
+      <div className="game-container">
+        <Stage width={720} height={1280} options={{resolution: 1, backgroundColor: 0xFFFFFF}} onMount={this.mountEvent}/>
+      </div>
+    )
+  }
 }
-
-export default App;
