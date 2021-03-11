@@ -1,0 +1,39 @@
+{"frames": {
+
+"FireMan_01.png":
+{
+	"frame": {"x":0,"y":0,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+"FireMan_02.png":
+{
+	"frame": {"x":50,"y":0,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+"FireMan_03.png":
+{
+	"frame": {"x":100,"y":0,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+}},
+"animations": {
+	"FireMan": ["FireMan_01.png","FireMan_02.png","FireMan_03.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "FireMan.png",
+	"format": "RGBA8888",
+	"size": {"w":150,"h":50},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a0571a3af05c41071009d8e7b893abbf:1494edf15ae35a99eeb87aca2d1407b8:bcedc57a27b0036d0e05f6d33b57d2a0$"
+}
+}

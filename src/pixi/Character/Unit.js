@@ -45,8 +45,7 @@ export default class Unit extends Container{
 
         this.interactive = this.buttonMode = true
         this.on('pointerdown', ()=>{
-            // this.blood.startBleeding()
-            this.text.style.fontSize += 5
+            this.blood.startBleeding()
         })
     }
 

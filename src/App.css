@@ -1,7 +1,22 @@
 .game-container{
   background-color: aquamarine;
-  width: 720px;
-  height: 1280px;
-  border: black 2px solid;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto;
+  border: red 5px solid;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+canvas{
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+  border: blue 3px dashed;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
 }
