@@ -10,14 +10,14 @@ import GamePad from './UI/GamePad'
 import gsap from "gsap"
 import Enemy from "./Enemy/Enemy"
 import AnimationManager from "./System/Assets/Animation/AnimationManager"
+import EnemyController from './Enemy/EnemyController'
 
 export const gamePad = new GamePad()
 
 export default class Main{
-    init = () => {
+    init = async () => {
 
-        // PIXI.LoaderResource.setExtensionLoadType('json', PIXI.LoaderResource.LOAD_TYPE.XHR);
-        // PIXI.LoaderResource.setExtensionXhrType('json', PIXI.LoaderResource.XHR_RESPONSE_TYPE.JSON)
+        await AnimationManager.loadAnimations()
         // 敵人提示
         const enemyBanner = new Banner().init(0xFF0000, 'Enemy')
         gsap.to(enemyBanner, {duration: 1, yoyo: true, alpha: 0, repeat: -1})
@@ -42,8 +42,15 @@ export default class Main{
         stage.addChild(enemyBanner, killBtn, uiLine, upgradeBtn, resourceBtn, gamePad)
 
         UnitController.init()
+        EnemyController.init()
 
-        AnimationManager.playAnimation(null, null)
+        setInterval(() => {
+            EnemyController.createEnemy()
+        }, 1000)
+        
+
+        // AnimationManager.playAnimation(stage, 'FireMan')
+        // AnimationManager.playAnimation(stage, 'Loading', 'Logo')
         // let value = 10
         // senterval(() => {
         //     window.dispatchEvent(new CustomEvent('updateRes', {detail: {

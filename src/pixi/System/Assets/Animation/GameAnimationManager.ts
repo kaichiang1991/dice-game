@@ -1,8 +1,10 @@
+import { app } from "../../../../App"
 import AnimationManager from "./AnimationManager"
 
 export default class GameAnimationManager{
 
     static playEnemyAnim(){
-        AnimationManager.playAnimation(null, null)
+        const {stage} = app
+        return AnimationManager.playAnimation(stage, 'FireMan')
     }
 }

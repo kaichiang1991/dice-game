@@ -1,14 +1,30 @@
+import { BaseTexture, LoaderResource, Spritesheet, SpritesheetLoader, Texture, utils, Sprite, AnimatedSprite, Loader } from "pixi.js"
 import { app } from "../../../../App"
-
+import FireManImg from '../../../../assets/FireMan.png'
+import FireManJson from '../../../../assets/FireMan.json'
+import LoadingImg from '../../../../assets/Loading.png'
+import LoadingJson from '../../../../assets/Loading.json'
 
 
 export default class AnimationManager{
 
-    private static readonly animationLists: Array<string> = [
-    ]
+    private static readonly animationLists: {[key: string]: {img, atlas}} = {
+        'FireMan': {img: FireManImg, atlas: FireManJson},
+        'Loading': {img: LoadingImg, atlas: LoadingJson}
+    }
 
     /** 讀取所有動畫的資源 */
-    public static async loadAnimations(){
+    public static async loadAnimations(){        
+        await new Promise<void>(res =>{
+            app.loader
+            .add(Object.values(this.animationLists).map(value => value.img))
+            .load(async () =>{
+                const allPromise: Array<Promise<void>> = Object.values(this.animationLists).map(value => new Promise<void>(res => new Spritesheet(Texture.from(value.img).baseTexture, value.atlas).parse(res)))
+                await Promise.all(allPromise)
+                res()
+            })
+        })
+
     }
 
     /**
@@ -19,19 +35,14 @@ export default class AnimationManager{
      * @param _config 自訂的動畫參數
      * @returns 撥放的動畫組件
      */
-    public static async playAnimation(parent, url){
-        // console.log('fireman', FireMan, aJson)
-        // console.log('fireman', FireMan, FireMan.animations['FireMan'].map(anim => Texture.from(anim)), app.loader)
-        // app.loader.add('loading', Loading)
-        // .onProgress.add('progress', (l, r) =>{
-        //     console.log('progress', r)
-        // })
-        // .load((loader, res) =>{
-        //     console.log( 'res', res)
-        // })
+    public static playAnimation(parent, key, animName = key){
+        const animSprite = new AnimatedSprite(this.animationLists[key].atlas.animations[animName].map(frame => Texture.from(frame)))
+        animSprite.play()
+        animSprite.animationSpeed = .3
+        parent.addChild(animSprite)
 
-        const {stage} = app
-        
+        return animSprite
+
         // const sp = await Sprite.from(FireMan.animations['fireMan'][0])
 
         // const sp = await Sprite.from(FireMan)

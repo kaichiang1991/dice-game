@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "gsap": "^3.6.0",
+    "imagemin-optipng": "^8.0.0",
     "pixi.js": "5.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "image-minimizer-webpack-plugin": "^1.0.0",
     "json-loader": "^0.5.7",
     "react-app-rewired": "^2.1.8"
   }
