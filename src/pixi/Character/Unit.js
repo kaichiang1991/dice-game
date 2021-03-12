@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { Container, Text, TextStyle } from "pixi.js";
 import Blood from "./Blood";
+import UnitController from "./UnitController";
 
 const typeDef = {
     0: {name: '兵',},
@@ -34,35 +35,41 @@ export default class Unit extends Container{
 
         this.index = index
         this.level = 0
-        this.hurtCountdown = 0
+        this.isAlive = true
         this.onRegisterEvent()
         return this
     }
 
     update(dt){
         if(this.hurtCountdown > 0){
-            console.log('update', 'minus')
             this.hurtCountdown -= dt
         }
     }
 
     async hurt(){
-        if(this.hurtCountdown <= 0){
-            this.hurtCountdown = 500
-            const blood = await this.blood.startBleeding()
-            console.log(blood)
+        const blood = await this.blood.startBleeding()
+        if(!blood){     // 角色死亡
+            this.die()
+            return true
         }
+
+        return false
+    }
+
+    die(){
+        console.log('die', this.index)
+        this.isAlive = false
+        window.dispatchEvent(new CustomEvent('removeFromBorder', {detail:{
+            index: this.index, unit: this
+        }}))
+
+        UnitController.unitArr.splice(this.index, 1)
     }
 
     onRegisterEvent(){
         window.dispatchEvent(new CustomEvent('addToBorder', {detail:{
             index: this.index, unit: this
         }}))
-
-        this.interactive = this.buttonMode = true
-        this.on('pointerdown', ()=>{
-            this.blood.startBleeding()
-        })
     }
 
     upgrade(){

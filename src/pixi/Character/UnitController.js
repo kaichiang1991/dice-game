@@ -28,7 +28,8 @@ export default class UnitController{
                 return
             }
 
-            this.unitArr.push(new Unit().init(type, gsap.utils.shuffle(notUsedIndex)[0]))
+            const index = gsap.utils.shuffle(notUsedIndex)[0]
+            this.unitArr[index] = new Unit().init(type, index)
         })
     }
 }

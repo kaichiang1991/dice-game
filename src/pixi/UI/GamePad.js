@@ -53,5 +53,14 @@ class Border extends Graphics{
             unit.position.set(...posDef.flat()[index])
             this.isUse = true
         })
+
+        window.addEventListener('removeFromBorder', context =>{
+            const {index, unit} = context.detail
+            if(index !== this.index)
+                return
+            
+            unit.parent?.removeChild(unit)
+            this.isUse = false
+        })
     }
 }
