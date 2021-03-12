@@ -14,8 +14,13 @@ export default class Blood extends Container{
     }
 
     startBleeding(){
-        // 測試扣血演出
-        gsap.to(this, {ease: Power0.easeNone, duration: 3, value: 0, onUpdate: this.updateBlood.bind(this)})
+        return new Promise(res =>{
+            if(this.value <= 0){
+                res(false)
+                return
+            }
+            gsap.to(this, {ease: Power0.easeNone, duration: .1, value: '-=0.1', onUpdate: this.updateBlood.bind(this), onComplete: ()=> res(this.value >= 0)})
+        })
     }
 
     updateBlood(){

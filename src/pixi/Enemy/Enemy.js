@@ -7,6 +7,7 @@ export default class Enemy extends Container{
     init(x, y){
         
         this.anim = GameAnimationManager.playEnemyAnim()
+        this.anim.scale.y = -1
         this.addChild(this.anim)
         this.position.set(x, y)
 
@@ -15,6 +16,14 @@ export default class Enemy extends Container{
     }
 
     walk(){
-        gsap.to(this, {ease: Power0.easeNone, duration: 5, y: '+=1280'})
+        this.walkTween = gsap.to(this, {ease: Power0.easeNone, duration: 5, y: 1200})
+    }
+
+    hit(charater){
+        return ((charater.x - this.x) ** 2 + (charater.y - this.y) ** 2) < 2500? charater: null
+    }
+
+    attack(){
+        this.walkTween?.paused(true)
     }
 }

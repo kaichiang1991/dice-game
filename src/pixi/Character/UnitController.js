@@ -8,6 +8,12 @@ export default class UnitController{
         this.onRegisterEvent()
     }
 
+    static characterGameLoop(dt){
+        this.unitArr?.forEach(unit =>{
+            unit.update(dt)
+        })
+    }
+
     static upgradeAll(){
         this.unitArr?.map(unit => unit.upgrade())
     }

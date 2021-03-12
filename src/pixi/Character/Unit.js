@@ -3,17 +3,17 @@ import { Container, Text, TextStyle } from "pixi.js";
 import Blood from "./Blood";
 
 const typeDef = {
-    0: '兵',
-    1: '帥',
-    2: '胖',
-    3: '嚇',
-    4: '奴'
+    0: {name: '兵',},
+    1: {name: '帥',},
+    2: {name: '胖',},
+    3: {name: '嚇',},
+    4: {name: '奴'},
 }
 
 export default class Unit extends Container{
     init(type, index){
         // 角色本人
-        this.text = new Text(typeDef[type], new TextStyle({
+        this.text = new Text(typeDef[type].name, new TextStyle({
             fontSize: 32
         }))
         this.text.anchor.set(.5)
@@ -34,8 +34,24 @@ export default class Unit extends Container{
 
         this.index = index
         this.level = 0
+        this.hurtCountdown = 0
         this.onRegisterEvent()
         return this
+    }
+
+    update(dt){
+        if(this.hurtCountdown > 0){
+            console.log('update', 'minus')
+            this.hurtCountdown -= dt
+        }
+    }
+
+    async hurt(){
+        if(this.hurtCountdown <= 0){
+            this.hurtCountdown = 500
+            const blood = await this.blood.startBleeding()
+            console.log(blood)
+        }
     }
 
     onRegisterEvent(){

@@ -44,10 +44,12 @@ export default class Main{
         UnitController.init()
         EnemyController.init()
 
-        setInterval(() => {
-            EnemyController.createEnemy()
-        }, 1000)
-        
+        this.gameLoop = (time, dt)=>{
+            UnitController.characterGameLoop(dt)
+            EnemyController.enemyGameLoop(dt)
+        }
+        gsap.ticker.add(this.gameLoop)
+
 
         // AnimationManager.playAnimation(stage, 'FireMan')
         // AnimationManager.playAnimation(stage, 'Loading', 'Logo')
