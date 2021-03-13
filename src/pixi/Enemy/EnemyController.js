@@ -10,6 +10,11 @@ export default class EnemyController{
         this.counter = 1000
     }
 
+    static end(){
+        this.counter = 1000
+        this.enemies.forEach(enemy => enemy.end())
+    }
+
     static enemyGameLoop(dt){
         if((this.counter -= dt) < 0){
             this.counter =  gsap.utils.random(1000, 1500)       // 產出倒數

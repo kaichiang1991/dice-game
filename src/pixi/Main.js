@@ -8,14 +8,17 @@ import ResourceBtn from "./UI/ResourceBtn"
 import UpgradeBtn from "./UI/UpgradeBtn"
 import GamePad from './UI/GamePad'
 import gsap from "gsap"
-import Enemy from "./Enemy/Enemy"
 import AnimationManager from "./System/Assets/Animation/AnimationManager"
 import EnemyController from './Enemy/EnemyController'
+import LifeController from './UI/LifeController'
+import { PixiPlugin } from 'gsap/all'
 
 export const gamePad = new GamePad()
 
 export default class Main{
     init = async () => {
+
+        gsap.registerPlugin(PixiPlugin)
 
         await AnimationManager.loadAnimations()
         // 敵人提示
@@ -35,19 +38,34 @@ export default class Main{
         // 資源
         const resourceBtn = new ResourceBtn('0').init()
         resourceBtn.position.set(550, 1200)
+        
         // 遊戲畫面
         gamePad.init()
         
         const {stage} = app
         stage.addChild(enemyBanner, killBtn, uiLine, upgradeBtn, resourceBtn, gamePad)
 
+        // 生命
+        LifeController.init()
         UnitController.init()
         EnemyController.init()
 
+        this.isPlaying = true
         this.gameLoop = (time, dt)=>{
             UnitController.characterGameLoop(dt)
             EnemyController.enemyGameLoop(dt)
         }
         gsap.ticker.add(this.gameLoop)
+
+        this.onRegisterEvent()
+    }
+
+    onRegisterEvent(){
+        window.addEventListener('gameOver', context =>{
+            console.log('gameOver')
+            EnemyController.end()
+            this.isPlaying = false
+            gsap.ticker.remove(this.gameLoop)
+        })
     }
 }

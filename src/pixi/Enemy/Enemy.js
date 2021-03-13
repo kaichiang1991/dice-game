@@ -27,9 +27,15 @@ export default class Enemy extends Container{
         return this
     }
 
+    end(){
+        this.walkTween?.isActive() && this.walkTween.kill()
+    }
+
     walk(){
         if(!this.walkTween)
-            this.walkTween = gsap.to(this, {ease: Power0.easeNone, duration: 5, y: 1200})
+            this.walkTween = gsap.to(this, {ease: Power0.easeNone, duration: 5, y: 1150, onComplete: ()=>{
+                window.dispatchEvent(new CustomEvent('minusLife'))
+            }})
         else
             this.walkTween.paused(false)
     }
