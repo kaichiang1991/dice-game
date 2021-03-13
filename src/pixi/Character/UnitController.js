@@ -5,6 +5,7 @@ import Unit from "./Unit"
 export default class UnitController{
     static init(){
         this.unitArr = []
+        window.ua = this.unitArr
         this.onRegisterEvent()
     }
 
@@ -30,6 +31,7 @@ export default class UnitController{
 
             const index = gsap.utils.shuffle(notUsedIndex)[0]
             this.unitArr[index] = new Unit().init(type, index)
+            console.log('newUnit', index, this.unitArr.slice())
         })
     }
 }

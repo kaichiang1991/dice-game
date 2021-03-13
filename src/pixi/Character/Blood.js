@@ -19,7 +19,7 @@ export default class Blood extends Container{
                 res(false)
                 return
             }
-            gsap.to(this, {ease: Power0.easeNone, duration: .1, value: '-=0.1', onUpdate: this.updateBlood.bind(this), onComplete: ()=> res(this.value >= 0)})
+            gsap.to(this, {ease: Power0.easeNone, duration: .1, value: '-=0.2', onUpdate: this.updateBlood.bind(this), onComplete: ()=> res(this.value >= 0)})
         })
     }
 

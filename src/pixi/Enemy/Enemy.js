@@ -1,6 +1,7 @@
 import gsap, { Power0 } from "gsap/all";
 import { BLEND_MODES, Container, Graphics } from "pixi.js";
 import { app } from "../../App";
+import UnitController from "../Character/UnitController";
 import GameAnimationManager from "../System/Assets/Animation/GameAnimationManager";
 
 export default class Enemy extends Container{
@@ -8,7 +9,9 @@ export default class Enemy extends Container{
     init(x, y){
         
         this.anim = GameAnimationManager.playEnemyAnim()
-        this.anim.scale.y = -1
+        this.anim.scale.y = -1      // 上下顛倒
+        this.anim.anchor.set(.5)
+
         this.addChild(this.anim)
         this.position.set(x, y)
 
@@ -19,7 +22,6 @@ export default class Enemy extends Container{
         this.slash.skew.x = .7
 
         this.attacking = false
-        // gsap.from(this.slash, {duration: .1, height: 0})
 
         this.walk()
         return this
@@ -32,12 +34,17 @@ export default class Enemy extends Container{
             this.walkTween.paused(false)
     }
 
-    hit(charater){
-        return !charater.isAlive? null: ((charater.x - this.x) ** 2 + (charater.y - this.y) ** 2) < 2500? charater: null
+    hit(){
+        return UnitController.unitArr.filter(unit => Math.abs(unit.y - this.y) < 100).find(unit => (unit.x - this.x)** 2 + (unit.y - this.y)** 2 < 2500)
     }
 
+    /**
+     * 執行攻擊動作
+     * @param {Unit} character 要攻擊的角色
+     * @returns true 攻擊結束 / false 正在攻擊
+     */
     async attack(character){
-        if(this.attacking)
+        if(this.attacking)      // 正在攻擊
             return false
 
         this.walkTween?.paused(true)
@@ -54,6 +61,6 @@ export default class Enemy extends Container{
         })
 
         this.attacking = false
-        return true
+        return true             // 攻擊結束
     }
 }

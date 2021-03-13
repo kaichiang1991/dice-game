@@ -46,6 +46,10 @@ export default class Unit extends Container{
         }
     }
 
+    /**
+     * 角色受傷
+     * @returns true 角色死亡 / false 還沒死
+     */
     async hurt(){
         const blood = await this.blood.startBleeding()
         if(!blood){     // 角色死亡
@@ -57,13 +61,12 @@ export default class Unit extends Container{
     }
 
     die(){
-        console.log('die', this.index)
         this.isAlive = false
         window.dispatchEvent(new CustomEvent('removeFromBorder', {detail:{
             index: this.index, unit: this
         }}))
 
-        UnitController.unitArr.splice(this.index, 1)
+        delete UnitController.unitArr[this.index]
     }
 
     onRegisterEvent(){

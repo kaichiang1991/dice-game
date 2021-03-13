@@ -49,17 +49,5 @@ export default class Main{
             EnemyController.enemyGameLoop(dt)
         }
         gsap.ticker.add(this.gameLoop)
-
-
-        // AnimationManager.playAnimation(stage, 'FireMan')
-        // AnimationManager.playAnimation(stage, 'Loading', 'Logo')
-        // let value = 10
-        // senterval(() => {
-        //     window.dispatchEvent(new CustomEvent('updateRes', {detail: {
-        //         value
-        //     }}))
-        //     value += 50
-        // }, 2000)
-        
     }
 }

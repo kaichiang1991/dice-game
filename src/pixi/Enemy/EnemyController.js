@@ -12,24 +12,24 @@ export default class EnemyController{
 
     static enemyGameLoop(dt){
         if((this.counter -= dt) < 0){
-            this.counter = gsap.utils.random(1000, 1500)
+            this.counter =  gsap.utils.random(1000, 1500)       // 產出倒數
             this.createEnemy()
         }
 
-        this.enemies.filter(enemy => !enemy.attacking).forEach(enemy =>{
-            UnitController.unitArr.map(unit => enemy.hit(unit)).forEach(async unit => {
-                if(unit){
-                    if(enemy.attack(unit)){
-                        const die = await unit.hurt()
-                        die && enemy.walk()
-                    }
+        this.enemies.forEach(async enemy =>{
+            let hitUnit
+            if(hitUnit = enemy.hit()){
+                if(await enemy.attack(hitUnit)){
+                    hitUnit.hurt()
                 }
-            })
+            }else{
+                enemy.walk()
+            }
         })
     }
 
     static createEnemy(){
-        const enemy = new Enemy().init(gsap.utils.random(0, 720), gsap.utils.random(-50, -100))
+        const enemy = new Enemy().init(gsap.utils.random(100, 620), gsap.utils.random(-50, -100))
         const {stage} = app
         stage.addChild(enemy)
 
