@@ -1,6 +1,5 @@
 import gsap from "gsap"
 import { app } from "../../App"
-import UnitController from "../Character/UnitController"
 import Enemy from "./Enemy"
 
 export default class EnemyController{
@@ -24,8 +23,8 @@ export default class EnemyController{
         }
 
         this.enemies.forEach(async enemy =>{
-            let hitUnit
-            if(hitUnit = enemy.hit()){
+            let hitUnit = enemy.hit()
+            if(hitUnit){
                 if(await enemy.attack(hitUnit)){
                     hitUnit.hurt()
                 }

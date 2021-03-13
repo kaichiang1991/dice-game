@@ -8,7 +8,7 @@ export let app
 export default class App extends Component {
   mountEvent = (e) => {
     app = e
-    console.log('mou',  app, new Main().init())
+    new Main().init()
   }
 
   render() {

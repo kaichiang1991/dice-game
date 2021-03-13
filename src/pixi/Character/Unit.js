@@ -5,12 +5,12 @@ import Blood from "./Blood";
 import Bullet from "./Bullet";
 import UnitController from "./UnitController";
 
-const typeDef = {
-    0: {name: '兵', distance: 300 ** 2, attack: 10},
-    1: {name: '帥', distance: 300 ** 2, attack: 10},
-    2: {name: '胖', distance: 300 ** 2, attack: 10},
-    3: {name: '嚇', distance: 300 ** 2, attack: 10},
-    4: {name: '奴', distance: 300 ** 2, attack: 10},
+export const typeDef = {
+    0: {name: '兵', distance: 300 ** 2, cost: 100, attack: 10},
+    1: {name: '帥', distance: 300 ** 2, cost: 100, attack: 10},
+    2: {name: '胖', distance: 300 ** 2, cost: 100, attack: 10},
+    3: {name: '嚇', distance: 300 ** 2, cost: 100, attack: 10},
+    4: {name: '奴', distance: 300 ** 2, cost: 100, attack: 10},
 }
 
 export default class Unit extends Container{
@@ -87,10 +87,16 @@ export default class Unit extends Container{
         }}))
     }
 
+    /**
+     * 升級角色
+     * @returns true 成功升級 / false 已升滿
+     */
     upgrade(){
         if(this.level++ < 5){
             this.upgradeUnit()
+            return true
         }
+        return false
     }
 
     upgradeUnit(){

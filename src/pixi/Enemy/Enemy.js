@@ -1,5 +1,5 @@
 import gsap, { Power0 } from "gsap/all";
-import { BLEND_MODES, Container, Graphics } from "pixi.js";
+import { Container, Graphics } from "pixi.js";
 import { app } from "../../App";
 import UnitController from "../Character/UnitController";
 import GameAnimationManager from "../System/Assets/Animation/GameAnimationManager";
@@ -54,13 +54,12 @@ export default class Enemy extends Container{
         .set(this.anim, {tint: 0xFFFFFF}, '+=0.1')
 
         if((this.blood -= value) <= 0){
-            console.log('blood', this.blood)
             this.die()
         }
     }
 
     die(){
-        // ToDo 加資源
+        window.dispatchEvent(new CustomEvent('addResource', {detail: {value: 100}}))        // 加資源
         EnemyController.endEnemy(this)
     }
 

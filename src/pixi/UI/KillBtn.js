@@ -1,3 +1,4 @@
+import gsap from "gsap/all";
 import { Container, Graphics, Text } from "pixi.js";
 
 export default class KillBtn extends Container{
@@ -23,7 +24,7 @@ export default class KillBtn extends Container{
         this.interactive = this.buttonMode = true
         this.on('pointerdown', ()=>{
             window.dispatchEvent(new CustomEvent('newUnit', {detail:{
-                type: ~~(Math.random() * 5)
+                type: gsap.utils.random(0, 4, 1)
             }}))
         })
     }

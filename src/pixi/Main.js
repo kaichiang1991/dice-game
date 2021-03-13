@@ -4,7 +4,6 @@ import { app } from "../App"
 import Banner from "./Banner"
 import UnitController from "./Character/UnitController"
 import KillBtn from "./UI/KillBtn"
-import ResourceBtn from "./UI/ResourceBtn"
 import UpgradeBtn from "./UI/UpgradeBtn"
 import GamePad from './UI/GamePad'
 import gsap from "gsap"
@@ -12,6 +11,7 @@ import AnimationManager from "./System/Assets/Animation/AnimationManager"
 import EnemyController from './Enemy/EnemyController'
 import LifeController from './UI/LifeController'
 import { PixiPlugin } from 'gsap/all'
+import ResourceController from './ResourceController'
 
 export const gamePad = new GamePad()
 
@@ -35,20 +35,18 @@ export default class Main{
         // 升級按鈕
         const upgradeBtn = new UpgradeBtn('升級').init()
         upgradeBtn.position.set(70, 1200)
-        // 資源
-        const resourceBtn = new ResourceBtn('0').init()
-        resourceBtn.position.set(550, 1200)
-        
         // 遊戲畫面
         gamePad.init()
         
         const {stage} = app
-        stage.addChild(enemyBanner, killBtn, uiLine, upgradeBtn, resourceBtn, gamePad)
+        stage.addChild(enemyBanner, killBtn, uiLine, upgradeBtn, gamePad)
 
-        // 生命
-        LifeController.init()
+        ResourceController.init()
+        LifeController.init()        // 生命
         UnitController.init()
         EnemyController.init()
+
+        window.dispatchEvent(new CustomEvent('addResource', {detail: {value: 1000}}))
 
         this.isPlaying = true
         this.gameLoop = (time, dt)=>{
