@@ -1,10 +1,9 @@
-import { BaseTexture, LoaderResource, Spritesheet, SpritesheetLoader, Texture, utils, Sprite, AnimatedSprite, Loader } from "pixi.js"
+import { Spritesheet, Texture, AnimatedSprite } from "pixi.js"
 import { app } from "../../../../App"
 import FireManImg from '../../../../assets/FireMan.png'
 import FireManJson from '../../../../assets/FireMan.json'
 import LoadingImg from '../../../../assets/Loading.png'
 import LoadingJson from '../../../../assets/Loading.json'
-
 
 export default class AnimationManager{
 

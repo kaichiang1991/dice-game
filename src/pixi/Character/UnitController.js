@@ -31,7 +31,6 @@ export default class UnitController{
 
             const index = gsap.utils.shuffle(notUsedIndex)[0]
             this.unitArr[index] = new Unit().init(type, index)
-            console.log('newUnit', index, this.unitArr.slice())
         })
     }
 }

@@ -1,17 +1,20 @@
 import gsap from "gsap";
 import { Container, Text, TextStyle } from "pixi.js";
+import EnemyController from "../Enemy/EnemyController";
 import Blood from "./Blood";
+import Bullet from "./Bullet";
 import UnitController from "./UnitController";
 
 const typeDef = {
-    0: {name: '兵',},
-    1: {name: '帥',},
-    2: {name: '胖',},
-    3: {name: '嚇',},
-    4: {name: '奴'},
+    0: {name: '兵', distance: 300 ** 2, attack: 10},
+    1: {name: '帥', distance: 300 ** 2, attack: 10},
+    2: {name: '胖', distance: 300 ** 2, attack: 10},
+    3: {name: '嚇', distance: 300 ** 2, attack: 10},
+    4: {name: '奴', distance: 300 ** 2, attack: 10},
 }
 
 export default class Unit extends Container{
+
     init(type, index){
         // 角色本人
         this.text = new Text(typeDef[type].name, new TextStyle({
@@ -30,19 +33,21 @@ export default class Unit extends Container{
 
         // 血條
         this.blood = new Blood().init()
-        
         this.addChild(this.text, this.blood, this.plus)
 
+        this.type = type
         this.index = index
         this.level = 0
         this.isAlive = true
+        this.shootCountdown = 0
         this.onRegisterEvent()
         return this
     }
 
     update(dt){
-        if(this.hurtCountdown > 0){
-            this.hurtCountdown -= dt
+        if((this.shootCountdown -= dt) <= 0){
+            this.attack()
+            this.shootCountdown = 1000
         }
     }
 
@@ -58,6 +63,13 @@ export default class Unit extends Container{
         }
 
         return false
+    }
+
+    attack(){
+        this.enemy = EnemyController.enemies.filter(enemy => Math.abs(enemy.y - this.y) < 500).find(enemy => (enemy.x - this.x)** 2 + (enemy.y - this.y)** 2 < typeDef[this.type].distance)
+        if(this.enemy){
+            new Bullet().init(typeDef[this.type].attack).shoot(this, this.enemy)
+        }
     }
 
     die(){
